@@ -23,8 +23,12 @@ app.get("/", (req,res) => {
 })
 //import routes 
 import authRoutes from "./routes/auth.routes.js"
+import messageRoute from "./routes/message.routes.js"
+
 
 app.use("/api/auth",authRoutes)
+app.use("/api/messages", messageRoute)
+
 
 app.listen(PORT, ()=>{
     console.log("Server is running on port " + PORT)
@@ -41,5 +45,4 @@ app.use((err, req, res, next)=>{
         statusCode,
         message,
     })
-    
 })
