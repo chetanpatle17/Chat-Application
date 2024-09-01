@@ -6,8 +6,8 @@ import { io } from "socket.io-client"
 export const SocketContext = createContext()
 
 export const useSocketContext = () => {
-  return useContext(SocketContext)
-}
+    return useContext(SocketContext)
+  }
 
 export const SocketContextProvider = ({ children }) => {
   const [socket, setSocket] = useState(null)
@@ -16,11 +16,11 @@ export const SocketContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (authUser) {
-      const socket = io("http://localhost:3000", {
-        query: {
-          userId: authUser._id,
-        },
-      })
+        const socket = io("http://localhost:3000", {
+            query: {
+              userId: authUser._id,
+            },
+          })
 
       setSocket(socket)
 
@@ -36,10 +36,12 @@ export const SocketContextProvider = ({ children }) => {
       }
     }
   }, [authUser])
+
   return (
     <SocketContext.Provider value={{ socket, onlineUsers }}>
       {children}
     </SocketContext.Provider>
   )
 }
+
 export default SocketContext

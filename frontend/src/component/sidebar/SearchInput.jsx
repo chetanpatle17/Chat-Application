@@ -5,31 +5,30 @@ import useGetConversations from "../../hooks/useGetConversations"
 import toast from "react-hot-toast"
 
 const SearchInput = () => {
-  const [search, setSearch] = useState("")
-  const { setSelectedConversation } = useConversation()
-  const { conversations } = useGetConversations()
-
-  // console.log(conversations)
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
-    if (!search) {
-      return
+    const [search, setSearch] = useState("")
+    const { setSelectedConversation } = useConversation()
+    const { conversations } = useGetConversations()
+  
+    // console.log(conversations)
+  
+    const handleSubmit = (e) => {
+      e.preventDefault()
+  
+      if (!search) {
+        return
+      }
+  
+      const conversation = conversations.find((conversation) =>
+        conversation.username.toLowerCase().includes(search.toLowerCase())
+      )
+  
+      if (conversation) {
+        setSelectedConversation(conversation)
+        setSearch("")
+      } else {
+        toast.error("No user found with this username")
+      }
     }
-
-    const conversation = conversations.find((conversation) =>
-      conversation.username.toLowerCase().includes(search.toLowerCase())
-    )
-
-    if (conversation) {
-      setSelectedConversation(conversation)
-      setSearch("")
-    } else {
-      toast.error("No user found with this username")
-    }
-  }
-
   return (
     <form className="flex items-center gap-2" onSubmit={handleSubmit}>
       <input
@@ -40,10 +39,11 @@ const SearchInput = () => {
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      <button type="submit" className="btn btn-circle bg-sky-500 text-white">
+      <button type="submit" className="btn btn-circle bg-gray-950 text-white">
         <IoSearchSharp className="w-6 h-6 outline-none" />
       </button>
     </form>
   )
 }
+
 export default SearchInput
